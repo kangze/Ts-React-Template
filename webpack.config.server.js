@@ -5,7 +5,7 @@ module.exports = {
     //mode: "development",
     mode: "production",
     entry: {
-        server: "./app/src/server_boot.tsx"
+        server: "./app/src/server.tsx"
     },
     output: {
         libraryTarget: 'commonjs',
