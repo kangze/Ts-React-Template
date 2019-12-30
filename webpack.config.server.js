@@ -1,9 +1,10 @@
 ﻿const path = require('path');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
+var dev = true;
+
 module.exports = {
-    //mode: "development",
-    mode: "production",
+    mode: dev ? "development" : "production",
     entry: {
         server: "./app/src/server.tsx"
     },
