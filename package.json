@@ -5,13 +5,16 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node --max-http-header-size=16385 ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --open"
+    "start": "cross-env NODE_ENV=development node --max-http-header-size=16385 ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --open --progress --profile --colors",
+    "build": "cross-env NODE_ENV=development webpack --config webpack.config.vendor.js",
+    "pro": "cross-env NODE_ENV=production webpack --mode production --config webpack.config.vendor.js &&cross-env NODE_ENV=production webpack --mode production"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^13.1.1",
     "@types/webpack-env": "^1.14.0",
+    "cross-env": "^7.0.2",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "ts-loader": "^6.0.4",
     "typescript": "^3.5.3",

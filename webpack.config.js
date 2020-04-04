@@ -5,12 +5,9 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 var port = 18080;
 var ipAddress = "localhost";
-var dev = true;
 var output_path = path.resolve(__dirname, "./app/dist/");
-
-
+const isDev = process.env.NODE_ENV === 'development';
 module.exports = {
-    mode: dev ? "development" : "production",
     entry: {
         client: "./app/src/index.tsx",
     },
@@ -19,7 +16,8 @@ module.exports = {
         publicPath: "http://" + ipAddress + ":" + port + "/dist/",
         path: output_path,
     },
-    devtool: "cheap-module-eval-source-map",
+    devtool: isDev ? "cheap-module-eval-source-map" : undefined,
+    mode: isDev ? "development" : "production",
     module: {
         rules: [
             {
@@ -40,13 +38,18 @@ module.exports = {
         extensions: ['.tsx', '.ts', '.js']
     },
     plugins: [
-        new webpack.HotModuleReplacementPlugin(),
         new ExtractTextPlugin("styles.css"),
         new webpack.DllReferencePlugin({
             context: __dirname,
             manifest: require('./app/dist/vendor-manifest.json')
         }),
-    ],
+    ].concat(isDev ? [
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.DefinePlugin({
+            'process.env': {
+                NODE_ENV: isDev ? '"development"' : '"production"'
+            }
+        })] : []),
 
     devServer: {
         contentBase: path.join(__dirname, "./app/dist"),

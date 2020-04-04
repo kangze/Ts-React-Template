@@ -1,12 +1,9 @@
 const path = require('path');
 const webpack = require('webpack');
 
-
-var dev = true;
 var output_path = path.resolve(__dirname, "./app/dist/");
-
+const isDev = process.env.NODE_ENV === 'development';
 module.exports = {
-    mode: dev ? "development" : "production",
     entry: {
         vendor: [
             "react",
@@ -14,6 +11,7 @@ module.exports = {
             "react-router-dom",
         ]
     },
+    mode: isDev ? "development" : "production",
     output: {
         path: output_path,
         filename: "[name].js",
